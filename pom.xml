@@ -24,6 +24,17 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</connection>
+        <developerConnection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</developerConnection>
+        <url>http://github.com/rac2030/SeleniumDownloadHelper</url>
+    </scm>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/rac2030/SeleniumDownloadHelper/issues</url>
+    </issueManagement>
+
     <developers>
         <developer>
             <id>rac2030</id>
