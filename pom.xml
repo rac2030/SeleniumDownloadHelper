@@ -50,11 +50,24 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.simpleHTTPServer</groupId>
+            <artifactId>SimpleHTTPServer</artifactId>
+            <version>1.0.0</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
+            <!--plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
                 <executions>
@@ -64,7 +77,10 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+                <configuration>
+                    <nosuffix>true</nosuffix>
+                </configuration>
+            </plugin-->
         </plugins>
     </build>
 
