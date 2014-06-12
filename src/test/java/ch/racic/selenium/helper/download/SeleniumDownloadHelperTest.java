@@ -6,13 +6,16 @@
 package ch.racic.selenium.helper.download;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.simpleHTTPServer.SimpleHTTPServer;
 
 import java.io.File;
 import java.net.URL;
@@ -22,27 +25,33 @@ import java.net.URL;
  */
 public class SeleniumDownloadHelperTest {
 
-    private static SimpleHTTPServer webServer;
     private WebDriver driver;
 
     // Server testdata
-    private static String baseUrl = "http://localhost:" + SimpleHTTPServer.DEFAULT_PORT + "/";
+    private static String baseUrl;
     private static String indexPage = "";
     private static String testPdf = "SeleniumDownloadHelper.pdf";
     private File testPdfFile;
     private static File serverBaseFolder = new File("src/test/resources/testServer");
     private byte[] referenceContent;
+    private static Server server;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        webServer = new SimpleHTTPServer(SimpleHTTPServer.DEFAULT_PORT, serverBaseFolder);
-        webServer.start();
-
+        Server server = new Server(0);
+        ResourceHandler resource_handler = new ResourceHandler();
+        resource_handler.setDirectoriesListed(true);
+        resource_handler.setResourceBase(serverBaseFolder.toString());
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{resource_handler});
+        server.setHandler(handlers);
+        server.start();
+        baseUrl = "http://localhost:" + server.getConnectors()[0].getLocalPort() + "/";
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        webServer.stop();
+        server.stop();
     }
 
     @Before
