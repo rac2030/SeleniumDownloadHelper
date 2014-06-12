@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.simpleHTTPServer.SimpleHTTPServer;
@@ -75,6 +76,13 @@ public class SeleniumDownloadHelperTest {
     @Test
     public void testGetFileFromUrlSafari() throws Exception {
         driver = new SafariDriver();
+        invokeGetFileDataFromUrl();
+        invokeGetFileFromUrl();
+    }
+
+    @Test
+    public void testGetFileFromUrlFireFox() throws Exception {
+        driver = new FirefoxDriver();
         invokeGetFileDataFromUrl();
         invokeGetFileFromUrl();
     }

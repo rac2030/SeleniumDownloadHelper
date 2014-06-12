@@ -67,6 +67,7 @@
 
     <build>
         <plugins>
+            <!-- Disable the minimizer as it might create clashes with other minified scripts in the target page -->
             <!--plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
