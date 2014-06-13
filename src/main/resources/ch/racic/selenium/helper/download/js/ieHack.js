@@ -20,7 +20,7 @@ var bin2arrVBS = [
     "    arrl=\"\"",
     "    if LenB(t) mod 2 Then arrl= Chr(AscB(RightB(t,1)))",
     "End Function"
-]
+];
 
 // Taken code from
 // http://www.actionscript.org/resources/articles/745/5/JavaScript-and-VBScript-Injection-in-ActionScript-3/Page5.html
@@ -30,9 +30,9 @@ function injectVB(vbArray) {
     var temp = '';
     for (var i = 0; i < vbArray.length; i++) {
         var vbTemp = vbArray[i];
-        temp += ('" + vbTemp + "' + String.fromCharCode(13));
+        temp += vbTemp + String.fromCharCode(13);
     }
     window.execScript(temp, 'vbscript');
-}
+};
 
 injectVB(bin2arrVBS);
