@@ -116,8 +116,9 @@ public class SeleniumDownloadHelperTest {
     private void invokeGetFileDataFromUrl() throws Exception {
         driver.get(baseUrl + indexPage);
         SeleniumDownloadHelper sdlh = new SeleniumDownloadHelper(driver);
-        byte[] fileContent = sdlh.getFileFromUrl(new URL(baseUrl + testPdf));
-        Assert.assertArrayEquals("Raw data is correct", referenceContent, fileContent);
+        FileData testFileData = sdlh.getFileFromUrlRaw(new URL(baseUrl + testPdf));
+        Assert.assertArrayEquals("Raw data is correct", referenceContent, testFileData.getData());
+        Assert.assertTrue("Guessed name from URL is correct", testPdf.equals(testFileData.getGuessedFilename()));
     }
 
     private void invokeGetFileFromUrl() throws Exception {
