@@ -15,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
@@ -76,6 +78,7 @@ public class SeleniumDownloadHelperTest {
 
     @Test
     public void testGetFileFromUrlChrome() throws Exception {
+        //TODO put this into pom profiles which are OS specific
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
         driver = new ChromeDriver();
         invokeGetFileDataFromUrl();
@@ -92,6 +95,20 @@ public class SeleniumDownloadHelperTest {
     @Test
     public void testGetFileFromUrlFireFox() throws Exception {
         driver = new FirefoxDriver();
+        invokeGetFileDataFromUrl();
+        invokeGetFileFromUrl();
+    }
+
+    @Test
+    public void testGetFileFromUrlInternetExplorer() throws Exception {
+        driver = new InternetExplorerDriver();
+        invokeGetFileDataFromUrl();
+        invokeGetFileFromUrl();
+    }
+
+    @Test
+    public void testGetFileFromUrlPhantomJS() throws Exception {
+        driver = new PhantomJSDriver();
         invokeGetFileDataFromUrl();
         invokeGetFileFromUrl();
     }
