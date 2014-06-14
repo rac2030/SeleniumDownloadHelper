@@ -5,6 +5,7 @@
 
 package ch.racic.selenium.helper.download;
 
+import net.anthavio.phanbedder.Phanbedder;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -17,6 +18,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
@@ -53,7 +56,9 @@ public class SeleniumDownloadHelperTest {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        server.stop();
+        if (server != null) {
+            server.stop();
+        }
     }
 
     @Before
@@ -78,7 +83,7 @@ public class SeleniumDownloadHelperTest {
 
     @Test
     public void testGetFileFromUrlChrome() throws Exception {
-        //TODO put this into pom profiles which are OS specific
+        //TODO put this into pom profiles which are OS specific or build helper lib like phantomjs has
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
         driver = new ChromeDriver();
         invokeGetFileDataFromUrl();
@@ -101,6 +106,7 @@ public class SeleniumDownloadHelperTest {
 
     @Test
     public void testGetFileFromUrlInternetExplorer() throws Exception {
+        //TODO Fetch latest binaries and make arch specific profiles
         driver = new InternetExplorerDriver();
         invokeGetFileDataFromUrl();
         invokeGetFileFromUrl();
@@ -108,7 +114,11 @@ public class SeleniumDownloadHelperTest {
 
     @Test
     public void testGetFileFromUrlPhantomJS() throws Exception {
-        driver = new PhantomJSDriver();
+        // See http://blog.anthavio.net/2014/04/phantomjs-embedder-for-selenium.html
+        File phantomjs = Phanbedder.unpack();
+        DesiredCapabilities dcaps = new DesiredCapabilities();
+        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, phantomjs.getAbsolutePath());
+        driver = new PhantomJSDriver(dcaps);
         invokeGetFileDataFromUrl();
         invokeGetFileFromUrl();
     }
