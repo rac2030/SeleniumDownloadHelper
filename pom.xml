@@ -11,7 +11,7 @@
 
     <groupId>ch.racic.selenium.helper</groupId>
     <artifactId>SeleniumDownloadHelper</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Selenium Download Helper library</name>
@@ -37,6 +37,19 @@
         <developerConnection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</developerConnection>
         <url>http://github.com/rac2030/SeleniumDownloadHelper</url>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>sonatype-nexus-staging</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <issueManagement>
         <system>github</system>
@@ -70,7 +83,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        <groupId>junit</groupId>
+            <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
@@ -108,9 +121,16 @@
             </plugin-->
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>sign</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <!-- See http://maven.apache.org/plugins/maven-gpg-plugin/ -->
