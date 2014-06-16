@@ -5,8 +5,8 @@
 
 package ch.racic.selenium.helper.download;
 
-import ch.racic.junit.annotation.TargetOS;
-import ch.racic.junit.runner.OSSensitiveRunner;
+import ch.racic.testing.annotation.TargetOS;
+import ch.racic.testing.junit.runner.OSSensitiveRunner;
 import net.anthavio.phanbedder.Phanbedder;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.server.Handler;
