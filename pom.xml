@@ -9,7 +9,7 @@
 
     <groupId>ch.racic.selenium.helper</groupId>
     <artifactId>SeleniumDownloadHelper</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Selenium Download Helper library</name>
@@ -34,7 +34,7 @@
         <connection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</connection>
         <developerConnection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</developerConnection>
         <url>http://github.com/rac2030/SeleniumDownloadHelper</url>
-      <tag>SeleniumDownloadHelper-0.3.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <distributionManagement>
