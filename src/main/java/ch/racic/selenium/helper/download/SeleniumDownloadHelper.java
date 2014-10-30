@@ -12,13 +12,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import sun.plugin.dom.exception.BrowserNotSupportedException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 /**
  * Created by rac on 08.06.14.
@@ -89,7 +86,7 @@ public class SeleniumDownloadHelper {
      * @param url
      * @return raw data
      */
-    public byte[] getFileFromUrl(URL url) {
+    public FileData getFileFromUrlRaw(URL url) {
         String scriptCollection;
         if (js instanceof InternetExplorerDriver) {
             scriptCollection = ieHackTestJs + ieHackJs + base64Js + dlHelperJs + getDownloadJsCallScript(url);
@@ -99,8 +96,14 @@ public class SeleniumDownloadHelper {
         } else {
             scriptCollection = ieHackTestJs + base64Js + dlHelperJs + getDownloadJsCallScript(url);
         }
-        String encodedContent = (String) js.executeScript(scriptCollection);
-        return Base64.decodeBase64(encodedContent);
+        String jsRetVal = (String) js.executeScript(scriptCollection);
+        String[] jsRetArr = jsRetVal.split(":contentstarts:", 2);
+        String encodedContent = jsRetArr[1];
+        String fileName = jsRetArr[0];
+        if (fileName.equals("")) {
+            fileName = url.getFile().replaceAll("/", "");
+        }
+        return new FileData(fileName, Base64.decodeBase64(encodedContent));
     }
 
     /**
@@ -113,9 +116,25 @@ public class SeleniumDownloadHelper {
      * @throws IOException
      */
     public File getFileFromUrl(URL url, File outputFile) throws IOException {
-        byte[] content = getFileFromUrl(url);
+        byte[] content = getFileFromUrlRaw(url).getData();
         FileUtils.writeByteArrayToFile(outputFile, content);
         return outputFile;
+    }
+
+    /**
+     * Executes XHR request trough JavaScript to download the given file in the context of the current WebDriver
+     * session. This method returns a tmp file and takes a guessed filename
+     *
+     * @param url
+     * @return outpuFile
+     * @throws IOException
+     */
+    public File getFileFromUrl(URL url) throws IOException {
+        FileData fd = getFileFromUrlRaw(url);
+        byte[] content = fd.getData();
+        File tmpFile = File.createTempFile("", fd.getGuessedFilename());
+        FileUtils.writeByteArrayToFile(tmpFile, content);
+        return tmpFile;
     }
 
 }
