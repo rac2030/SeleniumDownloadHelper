@@ -4,7 +4,8 @@
   ~ Michel Racic (http://rac.su/+) => github.com/rac2030
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.racic.selenium.helper</groupId>
@@ -21,7 +22,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <selenium.version>2.43.1</selenium.version>
+        <selenium.version>2.44.0</selenium.version>
     </properties>
 
     <licenses>
@@ -34,8 +35,8 @@
         <connection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</connection>
         <developerConnection>scm:git:git@github.com:rac2030/SeleniumDownloadHelper.git</developerConnection>
         <url>http://github.com/rac2030/SeleniumDownloadHelper</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -66,19 +67,27 @@
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-firefox-driver</artifactId>
+            <artifactId>selenium-ie-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
-        <dependency>
-        	<groupId>org.seleniumhq.selenium</groupId>
-        	<artifactId>selenium-safari-driver</artifactId>
-        	<version>${selenium.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
+            <artifactId>selenium-htmlunit-driver</artifactId>
             <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- libs only for tests, should all have <scope>test</scope> -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-safari-driver</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -117,6 +126,7 @@
             <version>0.1.4</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
