@@ -75,8 +75,8 @@ public class SeleniumDownloadHelper {
      * @param url
      * @return Javascript string
      */
-    private String getDownloadJsCallScript(URL url) {
-        return ";return seleniumDownloadHelper.getB64Binary('" + url + "');";
+    private String getDownloadJsCallScript(URL url, String method, String param) {
+        return ";return seleniumDownloadHelper.getB64Binary('" + url + "','" + method + "','" + param + "');";
     }
 
     /**
@@ -87,14 +87,27 @@ public class SeleniumDownloadHelper {
      * @return raw data
      */
     public FileData getFileFromUrlRaw(URL url) {
+    	return getFileFromUrlRaw(url, "GET", "null");
+    }
+
+    	/**
+     * Executes XHR request trough JavaScript to download the given file in the context of the current WebDriver
+     * session.
+     *
+     * @param url
+     * @param method POST or GET
+     * @param param Parameters for the Post Request 
+     * @return raw data
+     */
+    public FileData getFileFromUrlRaw(URL url, String method, String param) {
         String scriptCollection;
         if (js instanceof InternetExplorerDriver) {
-            scriptCollection = ieHackTestJs + ieHackJs + base64Js + dlHelperJs + getDownloadJsCallScript(url);
+            scriptCollection = ieHackTestJs + ieHackJs + base64Js + dlHelperJs + getDownloadJsCallScript(url, method, param);
         } else if (js instanceof HtmlUnitDriver) {
             //throw new BrowserNotSupportedException("JS download hack is not working on HTMLUnit");
-            scriptCollection = skipIeHackTestJS + base64Js + dlHelperJs + getDownloadJsCallScript(url);
+            scriptCollection = skipIeHackTestJS + base64Js + dlHelperJs + getDownloadJsCallScript(url, method, param);
         } else {
-            scriptCollection = ieHackTestJs + base64Js + dlHelperJs + getDownloadJsCallScript(url);
+            scriptCollection = ieHackTestJs + base64Js + dlHelperJs + getDownloadJsCallScript(url, method, param);
         }
         String jsRetVal = (String) js.executeScript(scriptCollection);
         String[] jsRetArr = jsRetVal.split(":contentstarts:", 2);
