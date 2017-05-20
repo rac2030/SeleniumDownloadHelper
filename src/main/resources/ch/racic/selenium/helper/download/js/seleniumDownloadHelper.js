@@ -13,14 +13,15 @@ var seleniumDownloadHelper = {
         } else if (window.ActiveXObject) {
             var xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
-
         xhr.open(method, url, false);
         if (xhr.overrideMimeType) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         } else {
             xhr.setRequestHeader('Accept-Charset', 'x-user-defined');
         }
-
+		if (method == 'POST') {
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		}
         xhr.send(param);
 
         if (xhr.status != 200) return '';
