@@ -5,7 +5,7 @@
 
 
 var seleniumDownloadHelper = {
-    getBinary: function (url) {
+    getBinary: function (url, method, param) {
         // Mozilla/Safari/IE7+
         if (window.XMLHttpRequest) {
             var xhr = new XMLHttpRequest();
@@ -13,15 +13,16 @@ var seleniumDownloadHelper = {
         } else if (window.ActiveXObject) {
             var xhr = new ActiveXObject("Microsoft.XMLHTTP");
         }
-
-        xhr.open("GET", url, false);
+        xhr.open(method, url, false);
         if (xhr.overrideMimeType) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         } else {
             xhr.setRequestHeader('Accept-Charset', 'x-user-defined');
         }
-
-        xhr.send(null);
+		if (method == 'POST') {
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		}
+        xhr.send(param);
 
         if (xhr.status != 200) return '';
 
@@ -43,8 +44,8 @@ var seleniumDownloadHelper = {
         }
     },
 
-    getB64Binary: function (url) {
-        var content = seleniumDownloadHelper.getBinary(url);
+    getB64Binary: function (url, method, param) {
+        var content = seleniumDownloadHelper.getBinary(url, method, param);
         return content[0] + ":contentstarts:" + base64Encode(content[1]);
     }
 };
